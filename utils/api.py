@@ -1,1 +1,1 @@
-base_url = "https://advertisement-platform-server.onrender.com"
+base_url = "https://advertisement-platform-server-2zhr.onrender.com"

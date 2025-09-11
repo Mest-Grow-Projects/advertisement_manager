@@ -32,7 +32,7 @@ def show_home_page():
     # Fullscreen background section
     with ui.element("div").classes(
         "hero-section flex flex-col items-center justify-center text-center"
-    ).style("background-image: url('/assets/assets/home.jpg');"):
+    ).style("background-image: url('/assets/home.jpg');"):
 
         # Dark overlay
         ui.element("div").classes("hero-overlay")
