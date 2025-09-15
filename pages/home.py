@@ -32,7 +32,7 @@ def show_home_page():
     # Fullscreen background section
     with ui.element("div").classes(
         "hero-section flex flex-col items-center justify-center text-center"
-    ).style("background-image: url('/assets/home.jpg');"):
+    ).style("background-image: url('/assets/dishes-mediterranean-cuisine.jpg');"):
 
         # Dark overlay
         ui.element("div").classes("hero-overlay")
@@ -43,11 +43,8 @@ def show_home_page():
                 "hero-title text-5xl md:text-6xl font-extrabold text-white mb-4 drop-shadow-xl tracking-wide"
             )
 
-            ui.label("Bridging the gap between you and your next meal").classes(
+            ui.label("Bridging the gap between you and your next meal!").classes(
                 "hero-subtitle text-lg md:text-2xl text-gray-200 mb-8 italic drop-shadow-sm"
             )
 
-            ui.button("Explore Restaurants", on_click=lambda: ui.navigate.to("/restaurants")).classes(
-                "hero-btn bg-gradient-to-r from-green-500 to-green-700 text-white font-semibold "
-                "text-lg px-8 py-3 rounded-2xl shadow-lg"
-            )
+            
