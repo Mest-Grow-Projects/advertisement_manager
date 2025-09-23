@@ -1,4 +1,5 @@
 from nicegui import ui
+from utils.auth import get_role, clear_session
 
 def show_header():
     # --- Fixed header ---
@@ -11,16 +12,17 @@ def show_header():
 
         # Desktop navigation
         with ui.row().classes('md:flex gap-8 text-lg font-medium'):
-            for name, link in [
-                ('Home', '/'),
-                ('Restaurants', '/view_advert'),
-                ('Add', '/vendor/add_advert'),
-                ('Edit', '/edit_advert'),
-                ('Sign-in', '/sign-in')
-            ]:
-                ui.link(name, link).classes(
-                    'text-gray-700 hover:text-red-500 no-underline transition-colors duration-300'
-                )
+            role = get_role()
+            ui.link('Home', '/').classes('text-gray-700 hover:text-red-500 no-underline transition-colors duration-300')
+            ui.link('Restaurants', '/view_advert').classes('text-gray-700 hover:text-red-500 no-underline transition-colors duration-300')
+            if role == 'vendor':
+                ui.link('Vendor Dashboard', '/vendor/dashboard').classes('text-gray-700 hover:text-red-500 no-underline transition-colors duration-300')
+                ui.link('Add', '/vendor/add_advert').classes('text-gray-700 hover:text-red-500 no-underline transition-colors duration-300')
+                ui.button('Logout', on_click=lambda: (clear_session(), ui.navigate.to('/'))).classes('q-btn--flat text-red-600')
+            elif role == 'user':
+                ui.button('Logout', on_click=lambda: (clear_session(), ui.navigate.to('/'))).classes('q-btn--flat text-red-600')
+            else:
+                ui.link('Sign-in', '/sign-in').classes('text-gray-700 hover:text-red-500 no-underline transition-colors duration-300')
 
         # Mobile menu toggle
         ui.button('☰', on_click=lambda: ui.notify('Mobile menu coming soon')).classes(
