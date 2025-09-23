@@ -14,7 +14,7 @@ def show_header():
             for name, link in [
                 ('Home', '/'),
                 ('Restaurants', '/view_advert'),
-                ('Add', '/add_advert'),
+                ('Add', '/vendor/add_advert'),
                 ('Edit', '/edit_advert'),
                 ('Sign-in', '/sign-in')
             ]:
