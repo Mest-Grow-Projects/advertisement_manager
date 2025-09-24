@@ -137,10 +137,10 @@ def show_home_page():
             # Modern CTA Buttons
             with ui.row().classes("gap-6 flex-wrap justify-center"):
                 ui.button("Explore Restaurants", on_click=lambda: ui.navigate.to('/view_advert')).classes(
-                    "px-8 py-3 text-lg font-semibold text-gray-900 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                    "px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:from-emerald-600 hover:to-green-700"
                 )
                 ui.button("Join as Vendor", on_click=lambda: ui.navigate.to('/sign-in')).classes(
-                    "px-8 py-3 text-lg font-semibold text-white border-2 border-white rounded-xl hover:bg-white hover:text-gray-900 transition-all duration-300 hover:scale-105"
+                    "px-8 py-3 text-lg font-bold text-white bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:from-emerald-600 hover:to-green-700"
                 )
 
     # === FEATURES SECTION ===
@@ -260,10 +260,10 @@ def show_home_page():
             with ui.element("div").classes("w-full flex justify-center"):
                 with ui.row().classes("gap-6 flex-wrap"):
                     ui.button("Browse Restaurants", on_click=lambda: ui.navigate.to('/view_advert')).classes(
-                        "px-8 py-3 text-lg font-semibold text-black bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                        "px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:from-emerald-600 hover:to-green-700"
                     )
                     ui.button("Start Selling", on_click=lambda: ui.navigate.to('/sign-in')).classes(
-                        "px-8 py-3 text-lg font-semibold text-black border-2 border-white bg-white rounded-xl hover:bg-gray-100 transition-all duration-300 hover:scale-105"
+                        "px-8 py-3 text-lg font-bold text-white bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:from-emerald-600 hover:to-green-700"
                     )
 
     # === FOOTER ===

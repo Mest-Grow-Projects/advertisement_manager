@@ -23,7 +23,7 @@ def show_view_advert_page():
 
     # --- Search input ---
     search_box = ui.input(placeholder="Search restaurants...").props("outlined dense clearable").classes(
-        "w-1/2 mx-auto mb-6"
+        "w-1/2 mx-auto mb-6 px-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:outline-none transition-colors"
     )
 
     # --- Container for results ---
@@ -40,7 +40,7 @@ def show_view_advert_page():
             # Header
             with ui.row().classes('w-full items-center justify-between mb-4'):
                 ui.label(advert.get('name', 'Untitled')).classes('text-2xl font-bold')
-                ui.button('×', on_click=dialog.close).classes('text-xl').style('background: none; border: none; color: #666;')
+                ui.button('×', on_click=dialog.close).classes('text-xl px-3 py-1 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105').style('border: none;')
             
             # Image
             if advert.get('image'):
@@ -61,7 +61,7 @@ def show_view_advert_page():
             with ui.row().classes('w-full justify-between mt-6'):
                 # Left side - Close button
                 ui.button('Close', on_click=dialog.close).classes(
-                    'px-6 py-2 bg-gray-300 text-black rounded-lg hover:bg-gray-400'
+                    'px-8 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl hover:from-gray-600 hover:to-gray-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105'
                 )
                 
                 # Right side - Edit/Delete buttons (always visible for vendors)
@@ -71,8 +71,8 @@ def show_view_advert_page():
                         ui.button('Edit', on_click=lambda: (
                             dialog.close(),
                             ui.navigate.to(f"/vendor/edit_advert/{advert.get('id')}")
-                        )).classes('px-6 py-2 text-white rounded-lg').style(
-                            'background-color: #077d16 !important; hover:background-color: #065a11 !important;'
+                        )).classes('px-8 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl hover:from-emerald-600 hover:to-green-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105').style(
+                            'border: none;'
                         )
                         
                         # Delete button with confirmation (always visible for vendors)
@@ -84,7 +84,7 @@ def show_view_advert_page():
                                 
                                 with ui.row().classes('w-full justify-end gap-2'):
                                     ui.button('Cancel', on_click=confirm_dialog.close).classes(
-                                        'px-4 py-2 bg-gray-300 text-black rounded-lg hover:bg-gray-400'
+                                        'px-6 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl hover:from-gray-600 hover:to-gray-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105'
                                     )
                                     
                                     def delete_advert():
@@ -109,14 +109,14 @@ def show_view_advert_page():
                                             ui.notify(f"Delete error: {e}", type='negative')
                                     
                                     ui.button('Delete', on_click=delete_advert).classes(
-                                        'px-4 py-2 text-white rounded-lg'
-                                    ).style('background-color: #dc2626 !important; hover:background-color: #b91c1c !important;')
+                                        'px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105'
+                                    ).style('border: none;')
                             
                             confirm_dialog.open()
                         
                         ui.button('Delete', on_click=confirm_delete).classes(
-                            'px-6 py-2 text-white rounded-lg'
-                        ).style('background-color: #dc2626 !important; hover:background-color: #b91c1c !important;')
+                            'px-8 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105'
+                        ).style('border: none;')
                         
                         # Show ownership indicator
                         if not is_owner:
@@ -141,8 +141,8 @@ def show_view_advert_page():
                         ui.label(r["description"][:50] + "..." if len(r.get("description", "")) > 50 else r.get("description", "")).classes("text-sm text-gray-600 mb-2")
                         ui.label(f"${r.get('price', 'N/A')}").classes("text-lg font-bold text-green-600 mb-2")
                         ui.button("View Details", on_click=lambda advert=r: show_advert_modal(advert)).classes(
-                            "w-full text-white rounded-lg"
-                        ).style('background-color: #077d16 !important; hover:background-color: #065a11 !important;')
+                            "w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl hover:from-emerald-600 hover:to-green-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                        ).style('border: none;')
 
     # First render
     render_cards()
