@@ -24,7 +24,7 @@ def show_sign_in_page():
                 signup_tab = ui.tab('Sign Up')
 
             with ui.tab_panels(tabs, value=login_tab).classes('w-full mt-4'):
-                # --- LOGIN TAB ---
+                # LOGIN TAB
                 with ui.tab_panel(login_tab):
                     email = ui.input('Email').props('outlined dense').classes('w-full mb-4')
                     password = ui.input('Password').props('outlined dense type=password').classes('w-full mb-6')
@@ -60,7 +60,7 @@ def show_sign_in_page():
                         'w-full text-white rounded-lg'
                     ).style('background-color: #077d16 !important; hover:background-color: #065a11 !important;')
 
-                # --- SIGN UP TAB ---
+                # SIGN UP TAB
                 with ui.tab_panel(signup_tab):
                     name = ui.input('Full Name').props('outlined dense').classes('w-full mb-4')
                     email_su = ui.input('Email').props('outlined dense').classes('w-full mb-4')

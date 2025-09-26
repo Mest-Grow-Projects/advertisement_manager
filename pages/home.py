@@ -1,5 +1,6 @@
 from nicegui import ui
 from components.footer import show_footer
+import time
 
 def show_home_page():
     # Load Google Fonts and modern custom styles
@@ -27,15 +28,30 @@ def show_home_page():
                 overflow: hidden;
             }
             
-            .hero-section::before {
-                content: '';
+            .hero-bg-slideshow {
                 position: absolute;
                 top: 0;
                 left: 0;
-                right: 0;
-                bottom: 0;
-                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>');
-                pointer-events: none;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+            }
+            
+            .hero-bg-slide {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: opacity 1.5s ease-in-out;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            
+            .hero-bg-slide.active {
+                opacity: 1;
             }
             
             .section-bg {
@@ -109,14 +125,46 @@ def show_home_page():
 
     # === HERO SECTION ===
     with ui.element("div").classes("hero-section w-full flex flex-col items-center justify-center text-center px-6 relative"):
-        # Background carousel with multiple food images
-        with ui.carousel(animated=True, arrows=True, navigation=True).classes("absolute inset-0 z-0").props('height=100%'):
-            # Carousel images from Pixabay
-            ui.image("https://cdn.pixabay.com/photo/2019/04/26/07/14/store-4156934_1280.jpg").classes("w-full h-full")
-            ui.image("https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg").classes("w-full h-full object-cover")
-            ui.image("https://cdn.pixabay.com/photo/2016/11/29/05/45/architecture-1867187_1280.jpg").classes("w-full h-full object-cover")
-            ui.image("https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg").classes("w-full h-full object-cover")
-            ui.image("https://cdn.pixabay.com/photo/2018/07/14/15/27/cafe-3537801_1280.jpg").classes("w-full h-full object-cover")
+        
+        # Custom JavaScript slideshow implementation
+        ui.add_head_html('''
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const slides = document.querySelectorAll('.hero-bg-slide');
+                let currentSlide = 0;
+                
+                function showSlide(n) {
+                    slides.forEach(slide => slide.classList.remove('active'));
+                    currentSlide = (n + slides.length) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }
+                
+                // Start slideshow
+                showSlide(0);
+                setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 5000); // Change slide every 5 seconds
+            });
+            </script>
+        ''')
+        
+        # Background slideshow with multiple food images
+        with ui.element('div').classes('hero-bg-slideshow'):
+            # Slide 1
+            with ui.element('div').classes('hero-bg-slide active').style('background-image: url("https://cdn.pixabay.com/photo/2019/04/26/07/14/store-4156934_1280.jpg")'):
+                pass
+            # Slide 2
+            with ui.element('div').classes('hero-bg-slide').style('background-image: url("https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg")'):
+                pass
+            # Slide 3
+            with ui.element('div').classes('hero-bg-slide').style('background-image: url("https://cdn.pixabay.com/photo/2016/11/29/05/45/architecture-1867187_1280.jpg")'):
+                pass
+            # Slide 4
+            with ui.element('div').classes('hero-bg-slide').style('background-image: url("https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg")'):
+                pass
+            # Slide 5
+            with ui.element('div').classes('hero-bg-slide').style('background-image: url("https://cdn.pixabay.com/photo/2018/07/14/15/27/cafe-3537801_1280.jpg")'):
+                pass
 
         # Dark overlay for better text readability
         with ui.element("div").classes("absolute inset-0 bg-black bg-opacity-50 z-5"):
@@ -136,7 +184,7 @@ def show_home_page():
             
             # Modern CTA Buttons
             with ui.row().classes("gap-6 flex-wrap justify-center"):
-                ui.button("Explore Restaurants", on_click=lambda: ui.navigate.to('/view_advert')).classes(
+                ui.button("Explore Restaurants", on_click=lambda: ui.navigate.to('/advertisements')).classes(
                     "px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:from-emerald-600 hover:to-green-700"
                 )
                 ui.button("Join as Vendor", on_click=lambda: ui.navigate.to('/sign-in')).classes(
@@ -173,7 +221,7 @@ def show_home_page():
                 ui.label("Popular Categories").classes("text-2xl md:text-3xl font-bold text-gray-900 mb-4 text-center")
                 ui.label("Discover culinary adventures across diverse cuisines and flavors").classes("text-base md:text-lg text-gray-600 font-normal max-w-2xl mx-auto leading-relaxed text-center")
             
-            with ui.row().classes("w-full justify-center gap-8 flex-nowrap"):
+            with ui.row().classes("w-full justify-center gap-8 flex-nowrap overflow-x-auto py-4"):
                 categories = [
                     {"name": "Fast Food", "image": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=300&h=200&fit=crop&auto=format&q=80"},
                     {"name": "Asian", "image": "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=300&h=200&fit=crop&auto=format&q=80"},
@@ -183,9 +231,9 @@ def show_home_page():
                 ]
                 
                 for category in categories:
-                    with ui.card().classes("flex-1 cursor-pointer card-hover bg-white rounded-2xl border border-gray-100 shadow-lg overflow-hidden min-w-0"):
-                        ui.image(category["image"]).classes("w-full h-28 object-cover")
-                        with ui.card_section().classes("p-3"):
+                    with ui.card().classes("flex-shrink-0 w-64 cursor-pointer card-hover bg-white rounded-2xl border border-gray-100 shadow-lg overflow-hidden"):
+                        ui.image(category["image"]).classes("w-full h-32 object-cover")
+                        with ui.card_section().classes("p-4"):
                             ui.label(category["name"]).classes("text-base font-semibold text-gray-900 text-center")
 
     # === FEATURED RESTAURANTS ===
@@ -238,7 +286,7 @@ def show_home_page():
         with ui.column().classes("w-full max-w-4xl mx-auto"):
             ui.label("BiteBridge by the Numbers").classes("text-2xl md:text-3xl font-bold text-center mb-12")
             
-            with ui.row().classes("w-full justify-center gap-8 flex-nowrap"):
+            with ui.row().classes("w-full justify-center gap-8 flex-wrap"):
                 stats = [
                     {"number": "500+", "label": "Restaurants"},
                     {"number": "10K+", "label": "Customers"},
@@ -246,7 +294,7 @@ def show_home_page():
                 ]
                 
                 for stat in stats:
-                    with ui.column().classes("items-center bg-white bg-opacity-95 p-6 rounded-2xl flex-1 min-w-0 shadow-lg"):
+                    with ui.column().classes("items-center bg-white bg-opacity-95 p-6 rounded-2xl flex-1 min-w-48 shadow-lg"):
                         ui.label(stat["number"]).classes("text-3xl font-bold mb-2 text-black")
                         ui.label(stat["label"]).classes("text-sm text-gray-700 font-medium")
 
@@ -259,7 +307,7 @@ def show_home_page():
             
             with ui.element("div").classes("w-full flex justify-center"):
                 with ui.row().classes("gap-6 flex-wrap"):
-                    ui.button("Browse Restaurants", on_click=lambda: ui.navigate.to('/view_advert')).classes(
+                    ui.button("Browse Restaurants", on_click=lambda: ui.navigate.to('/advertisements')).classes(
                         "px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:from-emerald-600 hover:to-green-700"
                     )
                     ui.button("Start Selling", on_click=lambda: ui.navigate.to('/sign-in')).classes(

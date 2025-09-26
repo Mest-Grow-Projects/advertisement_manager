@@ -1,5 +1,5 @@
 from nicegui import ui
-from components.side_bar import show_side_bar
+from components.sidebar import show_side_bar
 from utils.auth import require_vendor
 
 @ui.page("/vendor/events")
